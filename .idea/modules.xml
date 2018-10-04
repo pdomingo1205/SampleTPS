@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/SampleTPS.iml" filepath="$PROJECT_DIR$/SampleTPS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/application/app/app.iml" filepath="$PROJECT_DIR$/application/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/application/application.iml" filepath="$PROJECT_DIR$/application/application.iml" />
+      <module fileurl="file://$PROJECT_DIR$/application/controller/controller.iml" filepath="$PROJECT_DIR$/application/controller/controller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/dao/dao.iml" filepath="$PROJECT_DIR$/core/dao/dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/infra/infra.iml" filepath="$PROJECT_DIR$/infra/infra.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/model/model.iml" filepath="$PROJECT_DIR$/core/model/model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core/service/service.iml" filepath="$PROJECT_DIR$/core/service/service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/util/util.iml" filepath="$PROJECT_DIR$/util/util.iml" />
+      <module fileurl="file://$PROJECT_DIR$/application/view/view.iml" filepath="$PROJECT_DIR$/application/view/view.iml" />
+    </modules>
+  </component>
+</project>
