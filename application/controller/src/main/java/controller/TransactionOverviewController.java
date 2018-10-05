@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import model.Transaction;
+import service.TransactionService;
 import util.DateUtil;
 
 public class TransactionOverviewController {
@@ -13,9 +14,11 @@ public class TransactionOverviewController {
     @FXML
     private TableView<Transaction> transactionTable;
     @FXML
-    private TableColumn<Transaction, Number> transactionColumn;
+    private TableColumn<Transaction, String> transactionColumn;
     @FXML
     private TableColumn<Transaction, String> salesRepColumn;
+
+
 
     @FXML
     private Label transactionNoLabel;
@@ -29,6 +32,8 @@ public class TransactionOverviewController {
     private Label salesRepLabel;
     @FXML
     private Label amountLabel;
+
+    private TransactionService transactionService = new TransactionService();
 
     // Reference to the main application.
     private Main mainApp;
@@ -60,8 +65,8 @@ public class TransactionOverviewController {
     private void showTransactionDetails(Transaction transaction) {
         if (transaction != null) {
             // Fill the labels with info from the transaction object.
-            transactionNoLabel.setText(Long.toString(transaction.getTransactionId()));
-            dateLabel.setText(DateUtil.format(transaction.getDate()));
+            transactionNoLabel.setText((transaction.getTransactionId()));
+            //dateLabel.setText(DateUtil.format(transaction.getDate()));
             typeLabel.setText(transaction.getType());
             statusLabel.setText(transaction.getStatus());
             amountLabel.setText(Double.toString(transaction.getAmount()));
@@ -82,6 +87,7 @@ public class TransactionOverviewController {
     private void handleDeleteTransaction() {
         int selectedIndex = transactionTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0) {
+            transactionService.deleteTransaction(transactionTable.getItems().get(selectedIndex));
             transactionTable.getItems().remove(selectedIndex);
         }else if(transactionTable.getItems().isEmpty()) {
             // Nothing in table
@@ -110,8 +116,8 @@ public class TransactionOverviewController {
      */
     @FXML
     private void handleNewTransaction() {
-        Transaction tempTransaction = new Transaction(Long.valueOf(transactionTable.getItems().size()+1));
-        boolean okClicked = mainApp.showTransactionEditDialog(tempTransaction);
+        Transaction tempTransaction = new Transaction(String.valueOf(transactionTable.getItems().size()+1));
+        boolean okClicked = mainApp.showTransactionEditDialog(tempTransaction, "new");
         if (okClicked) {
             mainApp.getTransactionData().add(tempTransaction);
         }
@@ -125,7 +131,7 @@ public class TransactionOverviewController {
     private void handleEditTransaction() {
         Transaction selectedTransaction = transactionTable.getSelectionModel().getSelectedItem();
         if (selectedTransaction != null) {
-            boolean okClicked = mainApp.showTransactionEditDialog(selectedTransaction);
+            boolean okClicked = mainApp.showTransactionEditDialog(selectedTransaction, "edit");
             if (okClicked) {
                 showTransactionDetails(selectedTransaction);
             }

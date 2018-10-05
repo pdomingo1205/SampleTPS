@@ -2,64 +2,74 @@ package model;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import javafx.beans.property.*;
+import org.ektorp.support.CouchDbDocument;
 
 
-public class Transaction {
+public class Transaction extends CouchDbDocument {
 
-    private LongProperty transactionId;
+
+    @JsonProperty("_id")
+    private StringProperty transactionId;
+
+
+    @JsonProperty("type")
     private StringProperty type;
+
     private StringProperty status;
     private StringProperty salesRep;
     private DoubleProperty amount;
-    private ObjectProperty<LocalDate> date;
+    //private ObjectProperty<LocalDate> date;
 
 
     public Transaction() {
-        this.transactionId = new SimpleLongProperty();
+        this.transactionId = new SimpleStringProperty();
         this.type = new SimpleStringProperty();
         this.status = new SimpleStringProperty();
         this.salesRep = new SimpleStringProperty();
         this.amount = new SimpleDoubleProperty();
-        this.date = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
     }
 
-    public Transaction(Long transactionId, String type, String status, String salesRep, Double amount, LocalDate date) {
-        this.transactionId = new SimpleLongProperty(transactionId);
+    public Transaction(String transactionId, String type, String status, String salesRep, Double amount, LocalDate date) {
+        this.transactionId = new SimpleStringProperty(transactionId);
         this.type = new SimpleStringProperty(type);
         this.status = new SimpleStringProperty(status);
         this.salesRep = new SimpleStringProperty(salesRep);
         this.amount = new SimpleDoubleProperty(amount);
-        this.date = new SimpleObjectProperty<LocalDate>(date);
+        //this.date = new SimpleObjectProperty<LocalDate>(date);
     }
-    public Transaction(Long transactionId) {
-        this.transactionId = new SimpleLongProperty(transactionId);
+
+    public Transaction(String transactionId) {
+        this.transactionId = new SimpleStringProperty(transactionId);
         this.type = new SimpleStringProperty();
         this.status = new SimpleStringProperty();
         this.salesRep = new SimpleStringProperty();
         this.amount = new SimpleDoubleProperty();
-        this.date = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
+        //this.date = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
     }
 
-    public Transaction(Long transactionId, String type, String status, String salesRep, Double amount) {
-        this.transactionId = new SimpleLongProperty(transactionId);
+    public Transaction(@JsonProperty("_id") String transactionId, @JsonProperty("type") String type,
+                       @JsonProperty("status") String status, @JsonProperty("salesRep") String salesRep, @JsonProperty("amount") Double amount) {
+        this.transactionId = new SimpleStringProperty(transactionId);
         this.type = new SimpleStringProperty(type);
         this.status = new SimpleStringProperty(status);
         this.salesRep = new SimpleStringProperty(salesRep);
         this.amount = new SimpleDoubleProperty(amount);
-        this.date = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
+        //this.date = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
     }
 
-
-    public long getTransactionId() {
+    @JsonProperty("_id")
+    public String getTransactionId() {
         return transactionId.get();
     }
 
-    public LongProperty transactionIdProperty() {
+    public StringProperty transactionIdProperty() {
         return transactionId;
     }
 
-    public void setTransactionId(long transactionId) {
+    public void setTransactionId(String transactionId) {
         this.transactionId.set(transactionId);
     }
 
@@ -113,15 +123,15 @@ public class Transaction {
         this.amount.set(amount);
     }
 
-    public LocalDate getDate() {
-        return date.get();
-    }
+    //public LocalDate getDate() {
+    //    return date.get();
+    //}
 
-    public ObjectProperty<LocalDate> dateProperty() {
-        return date;
-    }
+    //public ObjectProperty<LocalDate> dateProperty() {
+        //return date;
+   // }
 
-    public void setDate(LocalDate date) {
-        this.date.set(date);
-    }
+    //public void setDate(LocalDate date) {
+        //this.date.set(date);
+    //}
 }

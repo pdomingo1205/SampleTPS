@@ -1,11 +1,15 @@
 package controller;
 
+import dao.TransactionDAO;
+import dao.TransactionRepository;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Transaction;
+import service.TransactionService;
+import util.DBaseUtil;
 import util.DateUtil;
 
 /**
@@ -29,9 +33,11 @@ public class TransactionEditDialogController {
     @FXML
     private TextField amountField;
 
+    private TransactionService transactionService = new TransactionService();
 
     private Stage dialogStage;
     private Transaction transaction;
+    private String buttonPressed;
     private boolean okClicked = false;
 
     /**
@@ -40,6 +46,10 @@ public class TransactionEditDialogController {
      */
     @FXML
     private void initialize() {
+    }
+
+    public void setButtonPressed(String buttonPressed){
+        this.buttonPressed = buttonPressed;
     }
 
     /**
@@ -64,7 +74,7 @@ public class TransactionEditDialogController {
             statusField.setText(transaction.getStatus());
             salesRepField.setText((transaction.getSalesRep()));
             amountField.setText(Double.toString(transaction.getAmount()));
-            dateField.setText(DateUtil.format(transaction.getDate()));
+            //dateField.setText(DateUtil.format(transaction.getDate()));
             dateField.setPromptText("dd.mm.yyyy");
         }catch(Exception e){
 
@@ -86,12 +96,20 @@ public class TransactionEditDialogController {
     @FXML
     private void handleOk() {
         if (isInputValid()) {
-            transaction.setTransactionId(Long.valueOf(transactionNoField.getText()));
+            transaction.setTransactionId((transactionNoField.getText()));
             transaction.setType(typeField.getText());
             transaction.setStatus(statusField.getText());
             transaction.setAmount(Double.valueOf(amountField.getText()));
             transaction.setSalesRep(salesRepField.getText());
-            transaction.setDate(DateUtil.parse(dateField.getText()));
+            //transaction.setDate(DateUtil.parse(dateField.getText()));
+
+            //transactionDAO.saveOrUpdate(transaction);
+            if(buttonPressed.equals("new")){
+                transactionService.createTransaction(transaction);
+
+            }else{
+                transactionService.updateTransaction(transaction);
+            }
 
             okClicked = true;
             dialogStage.close();

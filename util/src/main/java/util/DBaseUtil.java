@@ -11,10 +11,10 @@ import org.ektorp.support.CouchDbDocument;
 
 import javax.security.auth.login.Configuration;
 
-public class DBUtil {
+public class DBaseUtil {
 
     private static HttpClient httpClient = new StdHttpClient.Builder()
-            .host("localhost")
+            .host("localhost").username("admin").password("admin")
             .port(5984)
             .build();
 
@@ -26,12 +26,18 @@ public class DBUtil {
         try {
              dbInstance = new StdCouchDbInstance(httpClient);
              db = new StdCouchDbConnector("pos_db", dbInstance);
-
+             db.createDatabaseIfNotExists();
         } catch ( Throwable ex ) {
-            System.err.println ( "Failed to create Session Factory!" + ex );
+            System.err.println ( "Failed to create DB Instance!" + ex );
             throw new ExceptionInInitializerError( ex );
         }
     }
+
+    public static CouchDbConnector getConnection(){
+        return db;
+    }
+
+
 
 }
 
